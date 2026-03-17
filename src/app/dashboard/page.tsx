@@ -5,6 +5,7 @@ import { useSession, signOut } from 'next-auth/react'
 import { Application } from '@/types'
 import ApplicationCard from '@/components/applications/ApplicationCard'
 import ApplicationForm from '@/components/applications/ApplicationForm'
+import { Plus, LogOut, Briefcase, TrendingUp, Award, BarChart2 } from 'lucide-react'
 
 export default function DashboardPage() {
   const { data: session } = useSession()
@@ -45,8 +46,9 @@ export default function DashboardPage() {
           </div>
           <button
             onClick={() => signOut({ callbackUrl: '/login' })}
-            className="text-sm text-gray-500 hover:text-gray-700 transition"
+            className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 transition"
           >
+            <LogOut className="w-4 h-4" />
             Sign out
           </button>
         </div>
@@ -57,12 +59,13 @@ export default function DashboardPage() {
         {/* Stats bar */}
         <div className="grid grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'Total Applied', value: applications.length },
-            { label: 'Interviews', value: applications.filter(a => ['INTERVIEW', 'TECHNICAL_TEST', 'FINAL_ROUND'].includes(a.status)).length },
-            { label: 'Offers', value: applications.filter(a => a.status === 'OFFER').length },
-            { label: 'Response Rate', value: applications.length === 0 ? '0%' : `${Math.round((applications.filter(a => a.status !== 'APPLIED' && a.status !== 'WITHDRAWN').length / applications.length) * 100)}%` },
+            { label: 'Total Applied', value: applications.length, icon: <Briefcase className="w-4 h-4" /> },
+            { label: 'Interviews', value: applications.filter(a => ['INTERVIEW', 'TECHNICAL_TEST', 'FINAL_ROUND'].includes(a.status)).length, icon: <TrendingUp className="w-4 h-4" /> },
+            { label: 'Offers', value: applications.filter(a => a.status === 'OFFER').length, icon: <Award className="w-4 h-4" /> },
+            { label: 'Response Rate', value: applications.length === 0 ? '0%' : `${Math.round((applications.filter(a => a.status !== 'APPLIED' && a.status !== 'WITHDRAWN').length / applications.length) * 100)}%`, icon: <BarChart2 className="w-4 h-4" /> },
           ].map((stat) => (
             <div key={stat.label} className="bg-white border border-gray-200 rounded-xl p-4 text-center">
+              <div className="flex justify-center mb-2 text-gray-400">{stat.icon}</div>
               <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
               <p className="text-xs text-gray-500 mt-1">{stat.label}</p>
             </div>
@@ -84,7 +87,7 @@ export default function DashboardPage() {
               onClick={() => setShowForm(true)}
               className="w-full bg-black text-white py-3 rounded-xl font-medium hover:bg-gray-800 transition flex items-center justify-center gap-2"
             >
-              <span className="text-lg">+</span> Add Application
+              <Plus className="w-4 h-4" /> Add Application
             </button>
           )}
         </div>

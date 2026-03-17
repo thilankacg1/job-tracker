@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { MapPin, DollarSign, Calendar, ChevronRight } from 'lucide-react'
 import { Application } from '@/types'
 import StatusBadge from './StatusBadge'
 
@@ -15,24 +16,34 @@ export default function ApplicationCard({ application }: Props) {
   return (
     <Link href={`/dashboard/applications/${application.id}`}>
       <div className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md hover:border-gray-300 transition cursor-pointer">
-        {/* Company and status */}
-        <div className="flex items-start justify-between gap-3 mb-2">
+        <div className="flex items-start justify-between gap-3 mb-3">
           <div>
             <h3 className="font-semibold text-gray-900">{application.company}</h3>
             <p className="text-sm text-gray-500">{application.role}</p>
           </div>
-          <StatusBadge status={application.status} />
+          <div className="flex items-center gap-2">
+            <StatusBadge status={application.status} />
+            <ChevronRight className="w-4 h-4 text-gray-300" />
+          </div>
         </div>
 
-        {/* Details row */}
-        <div className="flex items-center gap-4 mt-3 text-xs text-gray-400">
+        <div className="flex items-center gap-4 text-xs text-gray-400">
           {application.location && (
-            <span>📍 {application.location}</span>
+            <span className="flex items-center gap-1">
+              <MapPin className="w-3 h-3" />
+              {application.location}
+            </span>
           )}
           {application.salary && (
-            <span>💰 {application.salary}</span>
+            <span className="flex items-center gap-1">
+              <DollarSign className="w-3 h-3" />
+              {application.salary}
+            </span>
           )}
-          <span className="ml-auto">Applied {appliedDate}</span>
+          <span className="flex items-center gap-1 ml-auto">
+            <Calendar className="w-3 h-3" />
+            {appliedDate}
+          </span>
         </div>
       </div>
     </Link>
