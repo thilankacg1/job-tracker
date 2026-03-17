@@ -12,6 +12,7 @@ const schema = z.object({
   location: z.string().optional(),
   salary: z.string().optional(),
   notes: z.string().optional(),
+  followUpAt: z.string().optional(),
 })
 
 type FormData = z.infer<typeof schema>
@@ -40,6 +41,9 @@ export default function EditApplicationForm({
       location: application.location ?? '',
       salary: application.salary ?? '',
       notes: application.notes ?? '',
+      followUpAt: application.followUpAt
+        ? new Date(application.followUpAt).toISOString().split('T')[0]
+        : '',
     },
   })
 
@@ -135,6 +139,18 @@ export default function EditApplicationForm({
           {...register('notes')}
           rows={3}
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black resize-none"
+        />
+      </div>
+
+      {/* Follow-up Date */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Follow-up Date
+        </label>
+        <input
+          type="date"
+          {...register('followUpAt')}
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
         />
       </div>
 

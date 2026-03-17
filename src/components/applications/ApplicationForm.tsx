@@ -11,6 +11,7 @@ const schema = z.object({
   location: z.string().optional(),
   salary: z.string().optional(),
   notes: z.string().optional(),
+  followUpAt: z.string().optional(),
 })
 
 type FormData = z.infer<typeof schema>
@@ -92,7 +93,7 @@ export default function ApplicationForm({ onSuccess, onCancel }: Props) {
         )}
       </div>
 
-      {/* Location and Salary — side by side */}
+      {/* Location and Salary */}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -126,6 +127,18 @@ export default function ApplicationForm({ onSuccess, onCancel }: Props) {
           placeholder="Any notes about this application..."
           rows={3}
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black resize-none"
+        />
+      </div>
+
+      {/* Follow-up Date */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Follow-up Date
+        </label>
+        <input
+          type="date"
+          {...register('followUpAt')}
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
         />
       </div>
 

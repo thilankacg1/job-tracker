@@ -27,6 +27,7 @@ export default function DashboardPage() {
   const [view, setView] = useState<'list' | 'kanban'>('list')
   const [search, setSearch] = useState('')
   const [filterStatus, setFilterStatus] = useState<ApplicationStatus | 'ALL'>('ALL')
+  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'company'>('newest')
 
   const fetchApplications = async () => {
     try {
@@ -70,8 +71,17 @@ export default function DashboardPage() {
       search.trim() === ''
         ? true
         : a.company.toLowerCase().includes(search.toLowerCase()) ||
-          a.role.toLowerCase().includes(search.toLowerCase())
+        a.role.toLowerCase().includes(search.toLowerCase())
     )
+    .sort((a, b) => {
+      if (sortBy === 'newest')
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      if (sortBy === 'oldest')
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      if (sortBy === 'company')
+        return a.company.localeCompare(b.company)
+      return 0
+    })
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -86,7 +96,10 @@ export default function DashboardPage() {
             </p>
           </div>
           <button
-            onClick={() => signOut({ callbackUrl: '/login' })}
+            onClick={() => {
+              const confirmed = confirm('Are you sure you want to sign out?')
+              if (confirmed) signOut({ callbackUrl: '/login' })
+            }}
             className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 transition"
           >
             <LogOut className="w-4 h-4" />
@@ -123,12 +136,12 @@ export default function DashboardPage() {
                 applications.length === 0
                   ? '0%'
                   : `${Math.round(
-                      (applications.filter(
-                        (a) => a.status !== 'APPLIED' && a.status !== 'WITHDRAWN'
-                      ).length /
-                        applications.length) *
-                        100
-                    )}%`,
+                    (applications.filter(
+                      (a) => a.status !== 'APPLIED' && a.status !== 'WITHDRAWN'
+                    ).length /
+                      applications.length) *
+                    100
+                  )}%`,
               icon: <BarChart2 className="w-4 h-4" />,
             },
           ].map((stat) => (
@@ -198,6 +211,17 @@ export default function DashboardPage() {
                 )}
               </select>
             </div>
+            <div className="relative">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest' | 'company')}
+                className="pl-4 pr-8 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black bg-white appearance-none cursor-pointer"
+              >
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="company">Company A–Z</option>
+              </select>
+            </div>
           </div>
         )}
 
@@ -206,22 +230,20 @@ export default function DashboardPage() {
           <div className="flex items-center gap-2 mb-4">
             <button
               onClick={() => setView('list')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition ${
-                view === 'list'
-                  ? 'bg-black text-white'
-                  : 'bg-white border border-gray-200 text-gray-500 hover:bg-gray-50'
-              }`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition ${view === 'list'
+                ? 'bg-black text-white'
+                : 'bg-white border border-gray-200 text-gray-500 hover:bg-gray-50'
+                }`}
             >
               <LayoutList className="w-4 h-4" />
               List
             </button>
             <button
               onClick={() => setView('kanban')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition ${
-                view === 'kanban'
-                  ? 'bg-black text-white'
-                  : 'bg-white border border-gray-200 text-gray-500 hover:bg-gray-50'
-              }`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition ${view === 'kanban'
+                ? 'bg-black text-white'
+                : 'bg-white border border-gray-200 text-gray-500 hover:bg-gray-50'
+                }`}
             >
               <Columns className="w-4 h-4" />
               Kanban

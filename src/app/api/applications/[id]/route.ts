@@ -42,15 +42,37 @@ export async function PATCH(
 
   const body = await request.json()
 
-  const application = await prisma.application.update({
-    where: {
-      id: id,
-      userId: session.user.id,
-    },
-    data: body,
-  })
+  // Clean up the data before saving to database
+  const data = {
+    ...body,
+    // Convert empty string to null, or parse the date string to a Date object
+    followUpAt: body.followUpAt
+      ? new Date(body.followUpAt)
+      : null,
+    // Remove empty strings for optional fields
+    jobUrl: body.jobUrl || null,
+    location: body.location || null,
+    salary: body.salary || null,
+    notes: body.notes || null,
+  }
 
-  return NextResponse.json(application)
+  try {
+    const application = await prisma.application.update({
+      where: {
+        id: id,
+        userId: session.user.id,
+      },
+      data,
+    })
+
+    return NextResponse.json(application)
+  } catch (error) {
+    console.error('PATCH error:', error)
+    return NextResponse.json(
+      { error: 'Failed to update application' },
+      { status: 500 }
+    )
+  }
 }
 
 export async function DELETE(

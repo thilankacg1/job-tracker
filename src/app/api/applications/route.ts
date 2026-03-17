@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json()
-  const { company, role, jobUrl, location, salary, notes } = body
+  const { company, role, jobUrl, location, salary, notes, followUpAt } = body
 
   if (!company || !role) {
     return NextResponse.json(
@@ -42,10 +42,11 @@ export async function POST(request: Request) {
       userId: session.user.id,
       company,
       role,
-      jobUrl,
-      location,
-      salary,
-      notes,
+      jobUrl: jobUrl || null,
+      location: location || null,
+      salary: salary || null,
+      notes: notes || null,
+      followUpAt: followUpAt ? new Date(followUpAt) : null,
     },
   })
 
