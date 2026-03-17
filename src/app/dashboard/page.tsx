@@ -2,16 +2,18 @@
 
 import { useEffect, useState } from 'react'
 import { useSession, signOut } from 'next-auth/react'
-import { Application } from '@/types'
 import ApplicationCard from '@/components/applications/ApplicationCard'
 import ApplicationForm from '@/components/applications/ApplicationForm'
-import { Plus, LogOut, Briefcase, TrendingUp, Award, BarChart2 } from 'lucide-react'
+import { Plus, LogOut, Briefcase, TrendingUp, Award, BarChart2, LayoutList, Columns } from 'lucide-react'
+import KanbanBoard from '@/components/applications/KanbanBoard'
+import { Application, ApplicationStatus } from '@/types'
 
 export default function DashboardPage() {
   const { data: session } = useSession()
   const [applications, setApplications] = useState<Application[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [view, setView] = useState<'list' | 'kanban'>('list')
 
   const fetchApplications = async () => {
     try {
@@ -32,6 +34,21 @@ export default function DashboardPage() {
   const handleSuccess = () => {
     setShowForm(false)
     fetchApplications()
+  }
+
+  const handleStatusChange = async (id: string, status: ApplicationStatus) => {
+    try {
+      await fetch(`/api/applications/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status }),
+      })
+      setApplications((prev) =>
+        prev.map((app) => (app.id === id ? { ...app, status } : app))
+      )
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -93,8 +110,34 @@ export default function DashboardPage() {
         </div>
 
         {/* Applications list */}
+        {/* View toggle */}
+        {applications.length > 0 && (
+          <div className="flex items-center gap-2 mb-4">
+            <button
+              onClick={() => setView('list')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition ${view === 'list'
+                  ? 'bg-black text-white'
+                  : 'bg-white border border-gray-200 text-gray-500 hover:bg-gray-50'
+                }`}
+            >
+              <LayoutList className="w-4 h-4" />
+              List
+            </button>
+            <button
+              onClick={() => setView('kanban')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition ${view === 'kanban'
+                  ? 'bg-black text-white'
+                  : 'bg-white border border-gray-200 text-gray-500 hover:bg-gray-50'
+                }`}
+            >
+              <Columns className="w-4 h-4" />
+              Kanban
+            </button>
+          </div>
+        )}
+
+        {/* Applications */}
         {loading ? (
-          // Skeleton loading cards
           <div className="space-y-3">
             {[1, 2, 3].map((i) => (
               <div key={i} className="bg-white border border-gray-200 rounded-xl p-5 animate-pulse">
@@ -109,19 +152,22 @@ export default function DashboardPage() {
             ))}
           </div>
         ) : applications.length === 0 ? (
-          // Empty state
           <div className="text-center py-16">
             <p className="text-4xl mb-4">📋</p>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">No applications yet</h3>
             <p className="text-gray-500 text-sm">Click the button above to add your first job application</p>
           </div>
-        ) : (
-          // Applications list
+        ) : view === 'list' ? (
           <div className="space-y-3">
             {applications.map((application) => (
               <ApplicationCard key={application.id} application={application} />
             ))}
           </div>
+        ) : (
+          <KanbanBoard
+            applications={applications}
+            onStatusChange={handleStatusChange}
+          />
         )}
 
       </main>
