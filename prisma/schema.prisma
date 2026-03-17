@@ -5,7 +5,6 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -32,8 +31,7 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -55,21 +53,21 @@ model VerificationToken {
 }
 
 model Application {
-  id         String            @id @default(cuid())
+  id         String             @id @default(cuid())
   userId     String
-  user       User              @relation(fields: [userId], references: [id])
+  user       User               @relation(fields: [userId], references: [id])
   company    String
   role       String
   jobUrl     String?
-  status     ApplicationStatus @default(APPLIED)
-  appliedAt  DateTime          @default(now())
+  status     ApplicationStatus  @default(APPLIED)
+  appliedAt  DateTime           @default(now())
   followUpAt DateTime?
   salary     String?
   notes      String?
   location   String?
   events     ApplicationEvent[]
-  createdAt  DateTime          @default(now())
-  updatedAt  DateTime          @updatedAt
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
 }
 
 enum ApplicationStatus {
