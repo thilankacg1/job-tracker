@@ -98,7 +98,6 @@ export default function ApplicationDetailPage({
   return (
     <div className="min-h-screen bg-gray-50">
 
-      {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center gap-4">
           <Link
@@ -113,7 +112,7 @@ export default function ApplicationDetailPage({
 
       <main className="max-w-3xl mx-auto px-6 py-8 space-y-6">
 
-        {/* Title block */}
+
         <div className="bg-white border border-gray-200 rounded-xl p-6">
           <div className="flex items-start justify-between gap-4 mb-6">
             <div>
@@ -132,7 +131,6 @@ export default function ApplicationDetailPage({
             </button>
           </div>
 
-          {/* Details grid */}
           <div className="grid grid-cols-2 gap-4 text-sm">
             {application.location && (
               <div>
@@ -190,7 +188,6 @@ export default function ApplicationDetailPage({
             )}
           </div>
 
-          {/* Notes */}
           {application.notes && (
             <div className="mt-4 pt-4 border-t border-gray-100">
               <p className="text-gray-400 text-xs mb-1">Notes</p>
@@ -201,7 +198,6 @@ export default function ApplicationDetailPage({
           )}
         </div>
 
-        {/* Edit form or edit button */}
         <div className="bg-white border border-gray-200 rounded-xl p-6">
           {editing ? (
             <>
@@ -234,7 +230,6 @@ export default function ApplicationDetailPage({
           )}
         </div>
 
-        {/* Status updater */}
         <div className="bg-white border border-gray-200 rounded-xl p-6">
           <h2 className="text-sm font-semibold text-gray-700 mb-4">
             Update Status

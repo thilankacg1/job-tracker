@@ -1,16 +1,23 @@
 import Link from 'next/link'
 import { Briefcase, BarChart2, Columns, ArrowRight, CheckCircle } from 'lucide-react'
+import jobtrackerImage from '../assets/jobTrackerLogo1.png'
+import Image from 'next/image'
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
 
-      {/* Nav */}
-      <nav className="border-b border-gray-100">
+      <nav className="border-b border-gray-100 bg-linear-to-br from-[#667eea] to-[#764ba2]">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Briefcase className="w-5 h-5" />
-            <span className="font-bold text-gray-900">Job Tracker</span>
+            <Image
+              src={jobtrackerImage}
+              alt="Job Tracker Logo"
+              width={150}
+              height={100}
+              // className="rounded-full"
+            />
+            {/* <span className="font-bold text-gray-900">Job Tracker</span> */}
           </div>
           <Link
             href="/login"
@@ -21,12 +28,11 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* Hero */}
       <section className="max-w-5xl mx-auto px-6 py-24 text-center">
-        <div className="inline-flex items-center gap-2 bg-gray-100 text-gray-600 text-xs font-medium px-3 py-1.5 rounded-full mb-6">
+        {/* <div className="inline-flex items-center gap-2 bg-gray-100 text-gray-600 text-xs font-medium px-3 py-1.5 rounded-full mb-6">
           <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
           Built by a developer actively job hunting in Australia
-        </div>
+        </div> */}
         <h1 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
           Stop losing track of<br />
           <span className="text-gray-400">your job applications</span>
@@ -52,8 +58,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="bg-gray-50 border-t border-gray-100">
+      <section className="bg-[#8fa0ea] border-t border-gray-100">
         <div className="max-w-5xl mx-auto px-6 py-20">
           <h2 className="text-2xl font-bold text-gray-900 text-center mb-12">
             Everything you need to stay organised
@@ -81,16 +86,15 @@ export default function HomePage() {
                   {feature.icon}
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{feature.desc}</p>
+                <p className="text-sm text-gray-200 leading-relaxed">{feature.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Social proof */}
       <section className="max-w-5xl mx-auto px-6 py-20">
-        <div className="bg-gray-50 border border-gray-100 rounded-2xl p-10 text-center">
+        <div className="bg-gray-100 border border-gray-100 rounded-2xl p-10 text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
             Built with a modern stack
           </h2>
@@ -119,7 +123,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="bg-black text-white">
         <div className="max-w-5xl mx-auto px-6 py-16 text-center">
           <h2 className="text-3xl font-bold mb-4">
@@ -138,14 +141,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="border-t border-gray-100">
         <div className="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between text-xs text-gray-400">
           <div className="flex items-center gap-2">
             <Briefcase className="w-4 h-4" />
             Job Tracker
           </div>
-          <p>Built by Thilanka — Brisbane, Australia</p>
+          <p>Built by Thilanka</p>
         </div>
       </footer>
 

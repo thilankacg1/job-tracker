@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dark-bg: #0F0E17;
+  --color-dark-surface: #1E1B2E;
+  --color-dark-border: #2D2B3D;
+  --color-dark-hover: #252336;
+  --color-brand-purple: #A78BFA;
+  --color-brand-green: #34D399;
+  --color-brand-blue: #60A5FA;
+  --color-brand-yellow: #FBBF24;
+  --color-brand-red: #F87171;
+}
+
+@layer base {
+  body {
+    background-color: #0F0E17;
+    color: #E2E8F0;
+  }
+
+  * {
+    border-color: #2D2B3D;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0F0E17;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2D2B3D;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3D3B4D;
+  }
+
+  input, textarea, select {
+    color-scheme: dark;
+  }
+}

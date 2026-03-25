@@ -48,9 +48,8 @@ export default function KanbanBoard({ applications, onStatusChange }: Props) {
           return (
             <div
               key={status}
-              className="flex-shrink-0 w-64 bg-gray-100 rounded-xl p-3"
+              className="shrink-0 w-64 bg-gray-100 rounded-xl p-3"
             >
-              {/* Column header */}
               <div className="flex items-center justify-between mb-3">
                 <span className={`text-xs font-semibold px-2 py-1 rounded-full ${config.color}`}>
                   {config.label}
@@ -60,7 +59,6 @@ export default function KanbanBoard({ applications, onStatusChange }: Props) {
                 </span>
               </div>
 
-              {/* Droppable area */}
               <Droppable droppableId={status}>
                 {(provided, snapshot) => (
                   <div
@@ -117,7 +115,6 @@ export default function KanbanBoard({ applications, onStatusChange }: Props) {
                     ))}
                     {provided.placeholder}
 
-                    {/* Empty column message */}
                     {columnApps.length === 0 && !snapshot.isDraggingOver && (
                       <div className="text-center py-4 text-xs text-gray-300">
                         Drop here

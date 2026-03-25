@@ -66,21 +66,19 @@ export default function EditApplicationForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {/* Company */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Company <span className="text-red-500">*</span>
         </label>
         <input
           {...register('company')}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-black"
         />
         {errors.company && (
           <p className="text-red-500 text-xs mt-1">{errors.company.message}</p>
         )}
       </div>
 
-      {/* Role */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Role <span className="text-red-500">*</span>
@@ -94,7 +92,6 @@ export default function EditApplicationForm({
         )}
       </div>
 
-      {/* Job URL */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Job URL
@@ -108,7 +105,6 @@ export default function EditApplicationForm({
         )}
       </div>
 
-      {/* Location and Salary */}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -130,7 +126,6 @@ export default function EditApplicationForm({
         </div>
       </div>
 
-      {/* Notes */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Notes
@@ -142,7 +137,6 @@ export default function EditApplicationForm({
         />
       </div>
 
-      {/* Follow-up Date */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Follow-up Date
@@ -154,7 +148,6 @@ export default function EditApplicationForm({
         />
       </div>
 
-      {/* Buttons */}
       <div className="flex gap-3 pt-2">
         <button
           type="submit"

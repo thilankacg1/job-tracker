@@ -27,8 +27,7 @@ export default function ApplicationCard({ application }: Props) {
 
     return (
         <Link href={`/dashboard/applications/${application.id}`}>
-            <div className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md hover:border-gray-300 transition cursor-pointer">
-                {/* Top row */}
+            <div className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md hover:border-gray-300 transition cursor-pointer mb-2">
                 <div className="flex items-start justify-between gap-3 mb-3">
                     <div>
                         <h3 className="font-semibold text-gray-900">{application.company}</h3>
@@ -54,7 +53,6 @@ export default function ApplicationCard({ application }: Props) {
                     </div>
                 </div>
 
-                {/* Bottom row */}
                 <div className="flex items-center gap-4 text-xs text-gray-400">
                     {application.location && (
                         <span className="flex items-center gap-1">
